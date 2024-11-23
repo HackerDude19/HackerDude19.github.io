@@ -15,6 +15,11 @@ app.use(express.json());
 app.post('/login', (req, res) => {
     const { username, password } = req.body;
 
+    // Check if username and password are provided
+    if (!username || !password) {
+        return res.status(400).json({ success: false, message: 'Username and password are required' });
+    }
+
     // Read the login.txt file to get the correct username and password
     fs.readFile(path.join(__dirname, 'login.txt'), 'utf8', (err, data) => {
         if (err) {
@@ -25,7 +30,12 @@ app.post('/login', (req, res) => {
         // Split the file content into username and password
         const [storedUsername, storedPassword] = data.trim().split(':');
 
-        // Validate the input credentials against the file
+        // Ensure that the stored credentials are not empty
+        if (!storedUsername || !storedPassword) {
+            return res.status(500).json({ success: false, message: 'Invalid server configuration' });
+        }
+
+        // Validate the input credentials against the file content
         if (username === storedUsername && password === storedPassword) {
             return res.json({ success: true, message: 'Login successful' });
         } else {
