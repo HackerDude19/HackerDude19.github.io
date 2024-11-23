@@ -1,56 +1,40 @@
 const express = require('express');
-const session = require('express-session');
+const fs = require('fs');
 const path = require('path');
 
 const app = express();
-const port = 3000;
+const PORT = 3000;
 
-// Middleware to parse incoming JSON requests
-app.use(express.json());
-
-// Set up session middleware
-app.use(session({
-    secret: 'your-secret-key',
-    resave: false,
-    saveUninitialized: true,
-    cookie: { secure: false }  // Set to true if using https
-}));
-
-// Serve static files (CSS, JS)
+// Serve static files from the 'public' directory
 app.use(express.static(path.join(__dirname, 'public')));
 
-// Route to serve the main HTML page
-app.get('/', (req, res) => {
-    res.sendFile(path.join(__dirname, 'index.html'));
-});
+// Middleware to parse JSON requests
+app.use(express.json());
 
-// Route to handle login form submission
+// Route to handle login
 app.post('/login', (req, res) => {
-    const { username } = req.body;
-    req.session.username = username;  // Store username in session
-    res.redirect('/');  // Redirect to home after login
-});
+    const { username, password } = req.body;
 
-// Route to handle logout
-app.get('/logout', (req, res) => {
-    req.session.destroy((err) => {
+    // Read the login.txt file to get the correct username and password
+    fs.readFile(path.join(__dirname, 'login.txt'), 'utf8', (err, data) => {
         if (err) {
-            return res.status(500).send("Failed to log out");
+            console.error('Error reading login.txt:', err);
+            return res.status(500).json({ success: false, message: 'Server error' });
         }
-        res.redirect('/');  // Redirect to home page after logout
+
+        // Split the file content into username and password
+        const [storedUsername, storedPassword] = data.trim().split(':');
+
+        // Validate the input credentials against the file
+        if (username === storedUsername && password === storedPassword) {
+            return res.json({ success: true, message: 'Login successful' });
+        } else {
+            return res.status(401).json({ success: false, message: 'Invalid username or password' });
+        }
     });
 });
 
-// Route to fetch session data (check if user is logged in)
-app.get('/session', (req, res) => {
-    if (req.session.username) {
-        res.json({ username: req.session.username });
-    } else {
-        res.json({ username: null });
-    }
-});
-
 // Start the server
-app.listen(port, () => {
-    console.log(`Server running at http://localhost:${port}`);
+app.listen(PORT, () => {
+    console.log(`Server is running on http://localhost:${PORT}`);
 });
