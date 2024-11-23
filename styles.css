@@ -1,0 +1,100 @@
+/* Import MinecraftTen font */
+@font-face {
+    font-family: 'MinecraftTen';
+    src: url('fonts/MinecraftTen.ttf') format('truetype');
+}
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Set MinecraftTen as the default font */
+body {
+    font-family: 'MinecraftTen', Arial, sans-serif;
+    background-color: #e0f7fa;
+    color: #333;
+}
+
+/* Header */
+header {
+    background-color: #388e3c;
+    color: white;
+    padding: 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.logo {
+    font-size: 24px;
+    font-weight: bold;
+}
+
+nav ul {
+    list-style-type: none;
+    display: flex;
+}
+
+nav ul li {
+    margin: 0 10px;
+}
+
+nav ul li a {
+    color: white;
+    text-decoration: none;
+}
+
+/* Hero Section */
+.hero {
+    background-image: url(images/untitled.png); /* Replace with a scenic Minecraft image */
+    background-size: cover;
+    color: white;
+    text-align: center;
+    padding: 100px 20px;
+}
+
+.hero h2 {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.hero p {
+    font-size: 24px;
+    margin-bottom: 20px;
+}
+
+.join-btn {
+    padding: 15px 30px;
+    font-size: 18px;
+    background-color: #388e3c;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+.join-btn:hover {
+    background-color: #2e7d32;
+}
+
+/* About & Updates */
+#about, #updates {
+    padding: 40px 20px;
+    text-align: center;
+}
+
+#about h3, #updates h3 {
+    font-size: 32px;
+    margin-bottom: 20px;
+}
+
+/* Footer */
+footer {
+    background-color: #388e3c;
+    color: white;
+    text-align: center;
+    padding: 20px 0;
+    font-size: 14px;
+}

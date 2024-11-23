@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>The Stoobid SMP</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Header Section -->
+    <header>
+        <h1 class="logo">The Stoobid SMP</h1>
+        <nav>
+            <ul>
+                <li><a href="#home">Home</a></li>
+                <li><a href="#rules">Rules</a></li>
+                <li><a href="#gallery">Gallery</a></li>
+                <li><a href="#news">News</a></li>
+                <li><a href="#contact">Contact</a></li>
+                <li><a href="login.html" id="login-link">Login</a></li> <!-- Link to login page -->
+                <li id="user-dropdown" style="display:none;">
+                    <button id="username-btn"></button>
+                    <ul id="dropdown-menu" style="display:none;">
+                        <li><a href="javascript:void(0);" id="logout">Logout</a></li>
+                    </ul>
+                </li>
+            </ul>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <h2>Welcome to The Stoobid SMP</h2>
+        <p>An Adventure Awaits in Our Unique Minecraft World!</p>
+        <button class="join-btn">Join Now - IP: your.server.ip</button>
+    </section>
+
+    <!-- Main Content -->
+    <section id="about">
+        <h3>About the Server</h3>
+        <p>The Stoobid SMP is a unique Minecraft server where players can explore custom-built biomes, participate in events, and build their dream worlds. Join us for an unforgettable adventure!</p>
+    </section>
+
+    <section id="updates">
+        <h3>Latest News & Updates</h3>
+        <ul>
+            <li><strong>New Nether Exploration Event</strong> - Join us this weekend for an epic journey into the Nether!</li>
+            <li><strong>PvP Tournament</strong> - Compete to be the last one standing!</li>
+        </ul>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 The Stoobid SMP. All Rights Reserved.</p>
+    </footer>
+
+    <script src="public/login.js"></script> <!-- Link to the external JavaScript file -->
+</body>
+</html>
