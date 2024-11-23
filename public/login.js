@@ -1,54 +1,34 @@
-// This script is used on both the homepage and login page
+document.addEventListener('DOMContentLoaded', function () {
+    const loginForm = document.getElementById('login-form');
 
-document.addEventListener('DOMContentLoaded', () => {
+    loginForm.addEventListener('submit', function (event) {
+        event.preventDefault(); // Prevent the form from submitting
 
-    // Handle the login form submission on the login page
-    if (document.getElementById('login-form')) {
-        document.getElementById('login-form').addEventListener('submit', function (event) {
-            event.preventDefault(); // Prevent default form submission
+        // Get the username and password input values
+        const username = document.getElementById('username').value;
+        const password = document.getElementById('password').value;
 
-            // Get the username entered in the form
-            const username = document.getElementById('username').value;
-
-            // Save login info to localStorage
-            localStorage.setItem('loggedIn', 'true');
-            localStorage.setItem('username', username);
-
-            // Redirect to the homepage
-            window.location.href = 'index.html'; // Go back to the homepage after successful login
+        // Send a POST request to the server for login validation
+        fetch('/login', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                alert('Login successful!');
+                // Redirect to another page or handle successful login here
+                // window.location.href = 'dashboard.html'; // Example redirection
+            } else {
+                alert('Invalid username or password. Please try again.');
+            }
+        })
+        .catch(error => {
+            console.error('Error during login:', error);
+            alert('An error occurred. Please try again later.');
         });
-    }
-
-    // Handle login state and display the username
-    const isLoggedIn = localStorage.getItem('loggedIn'); // Use localStorage to check if the user is logged in
-
-    if (isLoggedIn) {
-        const username = localStorage.getItem('username'); // Retrieve the username from localStorage
-        document.getElementById('login-link').style.display = 'none';  // Hide login link
-        document.getElementById('user-dropdown').style.display = 'block';  // Show user dropdown
-        document.getElementById('username-btn').textContent = username;  // Display the username
-    }
-
-    // Toggle dropdown menu
-    document.getElementById('username-btn').addEventListener('click', () => {
-        const menu = document.getElementById('dropdown-menu');
-        menu.style.display = (menu.style.display === 'none' || menu.style.display === '') ? 'block' : 'none';
-    });
-
-    // Handle logout functionality
-    document.getElementById('logout').addEventListener('click', () => {
-        // Perform logout action (clear user session, etc.)
-        console.log('Logging out...');
-
-        // Remove login info from localStorage
-        localStorage.removeItem('loggedIn');
-        localStorage.removeItem('username');
-
-        // Hide user menu and show login link again
-        document.getElementById('user-dropdown').style.display = 'none'; // Hide the dropdown
-        document.getElementById('login-link').style.display = 'block';  // Show login link
-
-        // Optionally, reload the page
-        location.reload(); // Reload to reset page to the logged-out state
     });
 });
